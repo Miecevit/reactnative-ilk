@@ -41,7 +41,7 @@ export default function App() {
     Alert.alert('Delete Todo', 
                 'Bu todoyu silmek istediğinize emin misiniz?', 
                 [
-                  {text: 'İptal', style: 'iptal_style'}, 
+                  {text: 'İptal'}, 
                   {text:'OK', onPress: () => setTodos(todos.filter((todo) => todo.id !== id)) }])
 
 
@@ -112,4 +112,3 @@ const styles = StyleSheet.create({
     color: 'red',
   },
 });
-

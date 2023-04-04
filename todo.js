@@ -47,6 +47,17 @@ export default function App() {
 
   }
 
+  function resetList(){
+
+    Alert.alert('Reset List',
+                'Listeyi temizlemek istediğiniz emin misiniz?',
+                [
+                  {text: 'Hayır'},
+                  {text: 'Evet', onPress: () => setTodos([])}
+                ])
+
+  }
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -55,11 +66,14 @@ export default function App() {
         value={input}
         onChangeText={setInput}
       />
-
+      <View style={styles.butonView}>
       <TouchableOpacity onPress={addTodo}>
         <Text style={styles.eklebutton}>EKLE</Text>
       </TouchableOpacity>
-
+      <TouchableOpacity onPress={resetList}>
+        <Text style={styles.resetbutton}>Temizle</Text>
+      </TouchableOpacity>
+      </View>
       <FlatList
         data={todos}
         keyExtractor={(item) => item.id}
@@ -72,6 +86,7 @@ export default function App() {
           </View>
         )}
       />
+
     </View>
   );
 }
@@ -109,6 +124,14 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     fontSize: 18,
+    color: 'red',
+  },
+  butonView: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  resetbutton: {
+        fontSize: 18,
     color: 'red',
   },
 });

@@ -6,17 +6,45 @@ import {
   TouchableOpacity,
   TextInput,
   FlatList,
+  Alert,
 } from 'react-native';
 
 export default function App() {
   const [input, setInput] = useState('');
   const [todos, setTodos] = useState([]);
 
-  function addTodo() {
-    alert(Date.now().toString());
-    setTodos([...todos, { id: Date.now().toString(), text: input }]);
+  function getRandomColor(){
+    const letters = '0123456789ABCDEF';
+    let color = '#';
 
-    setInput('');
+    for(let i = 0; i < 6; i++ ){
+      color += letters[Math.floor(Math.random()*16)]; 
+    }
+
+    return color;
+  }
+
+  function addTodo() {
+    if(input.trim() !== ''){
+      setTodos([
+        ...todos, 
+        { id: Date.now().toString(), 
+          text: input.trim(), 
+          bgColor: getRandomColor(), },
+        ]);
+      setInput('');
+    }
+  }
+
+  function deleteTodo(id) {
+
+    Alert.alert('Delete Todo', 
+                'Bu todoyu silmek istediğinize emin misiniz?', 
+                [
+                  {text: 'İptal', style: 'iptal_style'}, 
+                  {text:'OK', onPress: () => setTodos(todos.filter((todo) => todo.id !== id)) }])
+
+
   }
 
   return (
@@ -36,8 +64,11 @@ export default function App() {
         data={todos}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <View style={styles.todo}>
+          <View style={[styles.todo, {backgroundColor: item.bgColor}]}>
             <Text style={styles.todoText}> {item.text} </Text>
+            <TouchableOpacity onPress={() => deleteTodo(item.id)}>
+              <Text style={styles.deleteButton}>X</Text>
+            </TouchableOpacity>
           </View>
         )}
       />
@@ -50,15 +81,19 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     paddingTop: 50,
+    paddingHorizontal: 20,
   },
   input: {
     borderWidth: 1,
     borderColor: 'black',
     borderRadius: 5,
+    padding: 10,
+    marginBottom: 20,
   },
   eklebutton: {
     fontSize: 18,
     color: 'blue',
+    marginBottom: 20,
   },
   todo: {
     flexDirection: 'row',
@@ -66,8 +101,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     borderBottomWidth: 1,
     borderColor: 'gray',
+    paddingBottom: 10,
+    marginBottom: 10,
   },
   todoText: {
     fontSize: 18,
   },
+  deleteButton: {
+    fontSize: 18,
+    color: 'red',
+  },
 });
+

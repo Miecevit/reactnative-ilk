@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
 export default function App() {
 
   const [email, setEmail] = useState('');
@@ -19,11 +20,12 @@ export default function App() {
     try{
 
       await AsyncStorage.setItem(
-                  'kayitliKullanici', 
-                  JSON.stringfy({email, password}),
+                  'yeniKayit', 
+                  JSON.stringify({email, password}),
       );
 
       Alert.alert('Kayıt Başarılı', 'Şimdi giriş yapabilirsiniz');
+      console.log( JSON.parse(await AsyncStorage.getItem('yeniKayit')) );
       
     }catch(error){
       Alert.alert('Hata', 'Kayıt oluşturulurken hata oluştu.');

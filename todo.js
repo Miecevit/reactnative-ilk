@@ -12,7 +12,7 @@ import {
 export default function App() {
   const [input, setInput] = useState('');
   const [todos, setTodos] = useState([]);
-
+  
   function getRandomColor(){
     const letters = '0123456789ABCDEF';
     let color = '#';
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   resetbutton: {
-        fontSize: 18,
+    fontSize: 18,
     color: 'red',
   },
 });
